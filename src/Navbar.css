@@ -1,0 +1,86 @@
+body{
+    margin: 0;
+    overflow-x: hidden;
+    padding: 0;
+    box-sizing: border-box;
+}
+.hero-section{
+    background: url(./assets/hero-img.jpg)rgb(0 0 0 / 40%);
+    background-blend-mode: multiply;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+} 
+.navbar{
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    height: 80px;
+    margin: 20px;
+    border-radius: 16px;
+    padding: 0.5rem;
+} 
+.Quote-button{
+background-color: #a3c2a5;
+color: white;
+font-size:14px;
+padding:8px 20px;
+border-radius: 50px;
+text-decoration: none;
+transition: 0.3s background-color;
+}
+.Quote-button:hover{
+    background-color: #80b383;
+    color: white;
+}
+.navbar-toggler:focus, .btn-close:focus{
+box-shadow: none;
+outline: none;
+}
+.nav-link{
+    color: white;
+    font-weight: 500;
+    position: relative;
+}
+.nav-link:hover, .nav-link.active{
+    color: rgb(201, 198, 198);
+}
+.hero-section .container{
+    height: 100vh;
+    z-index: 1;
+    position: relative;
+}
+@media(min-width:991px){
+.nav-link::before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: #a3c2a5;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+}
+.nav-link:hover::before, .nav-link.active::before{
+width: 100%;
+visibility: visible;
+}
+}
+.card-title{
+    background-color: rgb(189 188 174 / 70%);
+    backdrop-filter: blur(10px);
+    height: 50px;
+    margin: 150px 0px 0px -5px;
+    width: 170px;
+    border-radius: 6px;
+    padding: 0.5rem;
+}
+/* Footer */
+.text-small {
+    font-size: 0.9rem;
+  }
+  
+  .footer-section {
+    background: #212529;
+  }
