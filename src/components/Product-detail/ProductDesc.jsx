@@ -65,10 +65,10 @@ const ProductDesc = () => {
                       </p>
                       <div className="sizes mt-5">
                         <h6 className="text-uppercase">Color</h6>{" "}
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
+                        <span className="dot"></span>
+                        <span className="dot"></span>
+                        <span className="dot"></span>
+                        <span className="dot"></span>
                       </div>
                       <div className="cart mt-4 align-items-center">
                         {" "}

@@ -14,6 +14,9 @@ import khila3 from "./img/khila-9.jpg";
 import khila2 from "./img/khila-10.jpg";
 import "../Categories/categories.css";
 import { useQuote } from "../../QuoteContext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Nails = () => {
   const products = [
     { name: 'Giriraj Screw', MOQ:'80 pc', image: khila1, rating: 4.8 , rate:10},
@@ -26,28 +29,38 @@ const Nails = () => {
     { name: 'Nylon Anchor Screw',  MOQ:'80 pc', image: khila10, rating: 4.8 ,rate:90},
     { name: 'Gypsum Screw', MOQ:'80 pc', image: khila3, rating: 4.8 ,rate:30},
     { name: 'SDS Screw',  MOQ:'80 pc', image: khila4, rating: 4.8 ,rate:100},
-
   ];
+
   const { addToQuote } = useQuote();
+
   const handleAddToCart = (product) => {
-        console.log("Adding to quote:", product);
     addToQuote(product);
+    // Show a toast notification
+    toast.success(`${product.name} added to get Quotes`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
+
   const Title = {
     marginTop: '0.2rem',
     marginLeft: '1rem',
+  };
 
-  }
   return (
     <section className="vw-100 mb-5 product-desc-hero">
       <div className="container product-title">
         <Link to="/" className="back-to-home">
-          <FontAwesomeIcon icon={faArrowLeft} size="2x" /> {/* Adjust size as needed */}
+          <FontAwesomeIcon icon={faArrowLeft} size="2x" />
         </Link>
         <h3 style={Title}>SCREW</h3>
       </div>
       <div className="container mt-5">
-      <div className="row">
+        <div className="row">
           {products.map((product, index) => (
             <div className="col-md-3 mb-3" key={index}>
               <div className="card">
@@ -56,16 +69,14 @@ const Nails = () => {
                 </div>
                 <div className="product-detail-container p-2">
                   <div className="d-flex justify-content-between align-items-center">
-                  <h5 className="dress-name">{product.name} <br/> M.O.Q {product.MOQ}</h5>
+                    <h5 className="dress-name">{product.name} <br/> M.O.Q {product.MOQ}</h5>
                   </div>
                   <div className="d-flex justify-content-between align-items-center pt-1">
                     <div>
                       <i className="fa fa-star-o rating-star"></i>
                       <span className="rating-number">{product.rating}</span><br/>
                       <p className="rating-number">{product.rate}</p>
-
                     </div>
-
                     <button className="discount" onClick={() => handleAddToCart(product)}>
                       Add to cart
                     </button>
@@ -74,8 +85,9 @@ const Nails = () => {
               </div>
             </div>
           ))}
-          </div>
+        </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };

@@ -19,6 +19,33 @@ const QuotePages = () => {
   // Calculate total including GST
   const totalWithGST = totalWithoutGST + GSTAmount;
 
+  const handleGetFinalQuotes = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userEmail: 'user@example.com', products: selectedProducts }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Handle success, maybe show a success message to the user
+        console.log('Emails sent successfully');
+      } else {
+        // Handle failure, show an error message
+        console.error('Error sending emails:', result.message);
+      }
+    } catch (error) {
+      console.error('Error sending emails:', error);
+    }
+
+    // After handling the email functionality, you can show the invoice modal
+    setShowInvoice(true);
+  };
+
   return (
     <section className="vw-100 mb-5 product-desc-hero">
       <div className="container product-title">
@@ -55,7 +82,7 @@ const QuotePages = () => {
           <div className="col-md-12">
             <button
               className="text-center Quote-button"
-              onClick={() => setShowInvoice(true)}
+              onClick={handleGetFinalQuotes}
             >
               Get Final Quotes
             </button>
@@ -70,7 +97,7 @@ const QuotePages = () => {
           role="dialog"
           style={{ display: "block" }}
         >
-          <div className="modal-dialog">
+            <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Invoice</h5>
