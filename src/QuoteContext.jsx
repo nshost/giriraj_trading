@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useState, useReducer } from 'react';
 
 const QuoteContext = createContext();
 
@@ -8,7 +8,7 @@ const initialState = {
 
 const quoteReducer = (state, action) => {
   switch (action.type) {
-    case "ADD_TO_QUOTE":
+    case 'ADD_TO_QUOTE':
       return {
         ...state,
         selectedProducts: [...state.selectedProducts, action.product],
@@ -20,13 +20,21 @@ const quoteReducer = (state, action) => {
 
 const QuoteProvider = ({ children }) => {
   const [state, dispatch] = useReducer(quoteReducer, initialState);
+  const [productQuantities, setProductQuantities] = useState({});
 
   const addToQuote = (product) => {
-    dispatch({ type: "ADD_TO_QUOTE", product });
+    dispatch({ type: 'ADD_TO_QUOTE', product });
+  };
+
+  const contextValue = {
+    state,
+    addToQuote,
+    productQuantities, // Include productQuantities in the context value
+    setProductQuantities, // If you need to update productQuantities outside QuoteProvider
   };
 
   return (
-    <QuoteContext.Provider value={{ state, addToQuote }}>
+    <QuoteContext.Provider value={contextValue}>
       {children}
     </QuoteContext.Provider>
   );
@@ -35,7 +43,7 @@ const QuoteProvider = ({ children }) => {
 const useQuote = () => {
   const context = useContext(QuoteContext);
   if (!context) {
-    throw new Error("useQuote must be used within a QuoteProvider");
+    throw new Error('useQuote must be used within a QuoteProvider');
   }
   return context;
 };

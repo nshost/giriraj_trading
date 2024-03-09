@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const QuotePages = () => {
   const { state } = useQuote();
-  const { selectedProducts } = state;
+  const selectedProducts = state?.selectedProducts || [];
   const [showInvoice, setShowInvoice] = useState(false);
 
   // Calculate the total price of selected products
@@ -72,6 +72,9 @@ const QuotePages = () => {
                       <i className="fa fa-star-o rating-star"></i>
                       <span className="rating-number">{product.rating}</span>
                       <p className="rating-number">{product.rate}</p>
+                    </div>
+                    <div className="quantity-text">
+                      {productQuantities[product.name] && `x${productQuantities[product.name]}`}
                     </div>
                   </div>
                 </div>

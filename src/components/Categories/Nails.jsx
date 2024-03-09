@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -19,22 +19,31 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Nails = () => {
   const products = [
-    { name: 'Giriraj Screw', MOQ:'80 pc', image: khila1, rating: 4.8 , rate:10},
-    { name: 'Metal Screw', MOQ:'80 pc', image: khila2, rating: 4.8 , rate : 20},
-    { name: 'Chipboard Screw', MOQ:'80 pc', image: khila5, rating: 4.8 ,rate:30},
-    { name: 'Wooden Screw',  MOQ:'80 pc', image: khila6, rating: 4.8 ,rate:50},
-    { name: 'Anchor Screw', MOQ:'80 pc', image: khila7, rating: 4.8 ,rate:20},
-    { name: 'FLange Hex SDS Screw',  MOQ:'80 pc', image: khila8, rating: 4.8 ,rate:30},
-    { name: 'Truss head SDS Screw',  MOQ:'80 pc', image: khila9, rating: 4.8 ,rate:30},
-    { name: 'Nylon Anchor Screw',  MOQ:'80 pc', image: khila10, rating: 4.8 ,rate:90},
-    { name: 'Gypsum Screw', MOQ:'80 pc', image: khila3, rating: 4.8 ,rate:30},
-    { name: 'SDS Screw',  MOQ:'80 pc', image: khila4, rating: 4.8 ,rate:100},
+    { name: 'Giriraj Screw', MOQ:'80 pc', image: khila1, rating: 4.8, rate: 10},
+    { name: 'Metal Screw', MOQ:'80 pc', image: khila2, rating: 4.8, rate: 20},
+    { name: 'Chipboard Screw', MOQ:'80 pc', image: khila5, rating: 4.8, rate: 30},
+    { name: 'Wooden Screw', MOQ:'80 pc', image: khila6, rating: 4.8, rate: 50},
+    { name: 'Anchor Screw', MOQ:'80 pc', image: khila7, rating: 4.8, rate: 20},
+    { name: 'FLange Hex SDS Screw', MOQ:'80 pc', image: khila8, rating: 4.8, rate: 30},
+    { name: 'Truss head SDS Screw', MOQ:'80 pc', image: khila9, rating: 4.8, rate: 30},
+    { name: 'Nylon Anchor Screw', MOQ:'80 pc', image: khila10, rating: 4.8, rate: 90},
+    { name: 'Gypsum Screw', MOQ:'80 pc', image: khila3, rating: 4.8, rate: 30},
+    { name: 'SDS Screw', MOQ:'80 pc', image: khila4, rating: 4.8, rate: 100},
   ];
 
-  const { addToQuote } = useQuote();
+  const { addToQuote, quoteState } = useQuote();
+  const selectedProducts = quoteState?.selectedProducts || [];
+  const [productQuantities, setProductQuantities] = useState({});
 
   const handleAddToCart = (product) => {
     addToQuote(product);
+    // Update quantity for the specific product
+    setProductQuantities((prevQuantities) => {
+      const updatedQuantities = { ...prevQuantities };
+      const currentQuantity = updatedQuantities[product.name] || 0;
+      updatedQuantities[product.name] = currentQuantity + 1;
+      return updatedQuantities;
+    });
     // Show a toast notification
     toast.success(`${product.name} added to get Quotes`, {
       position: "top-right",
@@ -69,13 +78,16 @@ const Nails = () => {
                 </div>
                 <div className="product-detail-container p-2">
                   <div className="d-flex justify-content-between align-items-center">
-                    <h5 className="dress-name">{product.name} <br/> M.O.Q {product.MOQ}</h5>
+                    <h5 className="dress-name">{product.name} <br /> M.O.Q {product.MOQ}</h5>
                   </div>
                   <div className="d-flex justify-content-between align-items-center pt-1">
                     <div>
                       <i className="fa fa-star-o rating-star"></i>
-                      <span className="rating-number">{product.rating}</span><br/>
+                      <span className="rating-number">{product.rating}</span><br />
                       <p className="rating-number">{product.rate}</p>
+                    </div>
+                    <div className="quantity-text">
+                      {productQuantities[product.name] && `x${productQuantities[product.name]}`}
                     </div>
                     <button className="discount" onClick={() => handleAddToCart(product)}>
                       Add to cart
